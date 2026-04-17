@@ -15,14 +15,14 @@
                         <!-- Title -->
                         <div>
                             <x-input-label for="title" :value="__('Titre')" />
-                            <x-text-input id="title" class="block mt-1 w-full" type="text" name="title" :value="old('title')" required autofocus />
+                            <x-text-input id="title" class="block mt-1 w-full" type="text" name="title" :value="old('title')" autofocus />
                             <x-input-error :messages="$errors->get('title')" class="mt-2" />
                         </div>
 
                         <!-- Content -->
                         <div class="mt-4">
                             <x-input-label for="content" :value="__('Contenu')" />
-                            <textarea id="content" name="content" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" rows="5" required>{{ old('content') }}</textarea>
+                            <textarea id="content" name="content" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" rows="5">{{ old('content') }}</textarea>
                             <x-input-error :messages="$errors->get('content')" class="mt-2" />
                         </div>
 
