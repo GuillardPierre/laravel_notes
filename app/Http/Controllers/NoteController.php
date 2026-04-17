@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NoteCreatedMail;
 use App\Models\Note;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class NoteController extends Controller
 {
@@ -47,6 +49,8 @@ class NoteController extends Controller
         $note = new Note($validated);
         $note->user()->associate(Auth::user());
         $note->save();
+
+        Mail::to(Auth::user())->send(new NoteCreatedMail($note));
 
         return redirect()
             ->route('notes.index')

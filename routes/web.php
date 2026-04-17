@@ -5,19 +5,29 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect()->route('notes.index');
+    return auth()->check()
+        ? redirect()->route('notes.index')
+        : redirect()->route('login');
 });
 
 Route::get('/dashboard', function () {
     return redirect()->route('notes.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name(
+        'profile.edit',
+    );
+    Route::patch('/profile', [ProfileController::class, 'update'])->name(
+        'profile.update',
+    );
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name(
+        'profile.destroy',
+    );
+
+    Route::resource('notes', NoteController::class);
 });
 
-Route::resource('notes', NoteController::class)->middleware("auth");
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
